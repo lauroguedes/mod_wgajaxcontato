@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" version="3.1.0" client="site" method="upgrade">
+    <name>WG Ajax Contato</name>
+    <author>Lauro W. Guedes</author>
+    <version>1.0.0</version>
+    <description><![CDATA[
+                <p>Módulo de envio de e-mail de forma assíncrona utilizando Ajax.</p>
+                <p>Desenvolvido por Lauro W. Guedes</p>
+                <p>leo-ti@hotmail.com / leowgweb@gmail.com <br/><a href="http://leowgweb.com.br">www.leowgweb.com.br</a><br/></p>
+        ]]></description>
+    <files>
+        <filename>mod_wgajaxcontato.xml</filename>
+        <filename module="mod_wgajaxcontato">mod_wgajaxcontato.php</filename>
+        <filename>index.html</filename>
+        <filename>helper.php</filename>
+        <filename>tmpl/default.php</filename>
+        <filename>tmpl/index.html</filename>
+        <filename>lib/enviar.php</filename>
+        <filename>lib/index.html</filename>
+        <filename>assets/index.html</filename>
+        <filename>assets/js/index.html</filename>
+        <filename>assets/js/ajax.js</filename>
+        <filename>assets/css/ajax.css</filename>
+        <filename>assets/css/index.html</filename>
+        <filename>assets/img/loading.png</filename>
+        <filename>assets/img/loading.gif</filename>
+        <filename>assets/img/index.html</filename>
+    </files>
+    <languages>
+        <language tag="pt-BR">language/pt-BR.mod_wgajaxcontato.ini</language>
+    </languages>
+    <!-- FORMULÁRIOS -->
+    <config>
+        <fields name="params">
+            <fieldset name="configuracao" label="ABA_WG_ADMIN_CONFIGURACAO">
+                <field name="email" type="email"
+                    label="LABEL_WG_ADMIN_DESTINATARIO"
+                    description="DESC_WG_ADMIN_DESTINATARIO"
+                    required="true"
+                    size="30"
+                    class="inputbox"
+                    validate="email" />
+                <field name="mensagem" type="textarea" default="VAL_WG_ADMIN_MSNR" label="LABEL_WG_ADMIN_MSNR" description="DESC_WG_ADMIN_MSNR" rows="7" cols="5" />
+                <field name="largura" type="text" default="auto" label="LABEL_WG_ADMIN_LFORM" description="DESC_WG_ADMIN_LFORM"/>
+                <field name="altura" type="text" default="300" label="LABEL_WG_ADMIN_AFORM" description="DESC_WG_ADMIN_AFORM"/>
+            </fieldset>
+            <fieldset name="advanced" label="Avançado">
+                <field name="moduleclass_sfx" type="text" default="" label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL" description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC"/>
+            </fieldset>
+        </fields>
+    </config>
+</extension>

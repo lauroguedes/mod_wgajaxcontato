@@ -1,0 +1,30 @@
+.loading{
+	display: none;
+	position: absolute;
+	z-index: 5;
+	width: 100%;
+}
+.gif{
+	color: #fff;
+	vertical-align: middle;
+	display: table-cell;
+	text-align: center;
+	background: #000;
+	background: rgba(255,255,255,0.5);
+	-moz-background: rgba(255,255,255,0.5);
+	-webkit-background: rgba(255,255,255,0.5);
+	-o-background: rgba(255,255,255,0.5);
+	-ms-background: rgba(255,255,255,0.5);
+}
+.alert-success,.alert-error{
+	position: absolute;
+	text-align: center;
+	width: 100%;
+	z-index: 2;
+	opacity: 0.8;
+	-moz-opacity: 0.8;
+	-webkit-opacity: 0.8;
+	-o-opacity: 0.8;
+	-ms-opacity: 0.8;
+	display: none;
+}
