@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     mod_wgajaxcontato - WG Ajax Contato Módulo
- * @version     1.0
+ * @version     1.2
  * @created     Jan 2015
  *
  * @author      Lauro W. Guedes

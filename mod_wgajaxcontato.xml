@@ -8,7 +8,7 @@
     <authorEmail>leo-ti@leowgweb.com.br</authorEmail>
     <authorUrl>http://www.leowgweb.com.br</authorUrl>
     <author>Lauro W. Guedes</author>
-    <version>1.0.0</version>
+    <version>1.2</version>
     <description><![CDATA[
                 <p>Módulo de envio de e-mail de forma assíncrona utilizando Ajax.</p>
                 <p>Desenvolvido por Lauro W. Guedes</p>
