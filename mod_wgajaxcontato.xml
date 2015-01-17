@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="module" version="3.1.0" client="site" method="upgrade">
     <name>WG Ajax Contato</name>
+    <creationDate>Jan 2015</creationDate>
+    <author>www.leowgweb.com.br</author>
+    <copyright>Copyright (C) 2015 Lauro W. Guedes.</copyright>
+    <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+    <authorEmail>leo-ti@leowgweb.com.br</authorEmail>
+    <authorUrl>http://www.leowgweb.com.br</authorUrl>
     <author>Lauro W. Guedes</author>
-    <version>1.0.0</version>
+    <version>1.2</version>
     <description><![CDATA[
                 <p>Módulo de envio de e-mail de forma assíncrona utilizando Ajax.</p>
                 <p>Desenvolvido por Lauro W. Guedes</p>
@@ -32,17 +38,25 @@
     <!-- FORMULÁRIOS -->
     <config>
         <fields name="params">
-            <fieldset name="configuracao" label="ABA_WG_ADMIN_CONFIGURACAO">
+            <fieldset name="configuracao" label="MOD_WGAJAXCONTATO_ABA_CONFIGURACAO">
                 <field name="email" type="email"
-                    label="LABEL_WG_ADMIN_DESTINATARIO"
-                    description="DESC_WG_ADMIN_DESTINATARIO"
+                    label="MOD_WGAJAXCONTATO_FIELD_EMAIL_LABEL"
+                    description="MOD_WGAJAXCONTATO_FIELD_EMAIL_DESC"
                     required="true"
                     size="30"
                     class="inputbox"
                     validate="email" />
-                <field name="mensagem" type="textarea" default="VAL_WG_ADMIN_MSNR" label="LABEL_WG_ADMIN_MSNR" description="DESC_WG_ADMIN_MSNR" rows="7" cols="5" />
-                <field name="largura" type="text" default="auto" label="LABEL_WG_ADMIN_LFORM" description="DESC_WG_ADMIN_LFORM"/>
-                <field name="altura" type="text" default="300" label="LABEL_WG_ADMIN_AFORM" description="DESC_WG_ADMIN_AFORM"/>
+                <field name="mensagem" type="textarea" label="MOD_WGAJAXCONTATO_FIELD_MENSAGEM_LABEL" description="MOD_WGAJAXCONTATO_FIELD_MENSAGEM_DESC" rows="7" cols="5" />
+                <field name="posicaolabel" type="list" default="MOD_WGAJAXCONTATO_SITE_AOLADO_VAL" label="MOD_WGAJAXCONTATO_FIELD_POSICAOLABEL_LABEL" description="MOD_WGAJAXCONTATO_FIELD_POSICAOLABEL_DESC">
+                  <option value="horizontal">MOD_WGAJAXCONTATO_SITE_AOLADO_VAL</option>
+                  <option value="vertical">MOD_WGAJAXCONTATO_SITE_ACIMA_VAL</option>
+                </field>
+                <field name="tamanhocampo" type="list" default="input-xlarge" label="MOD_WGAJAXCONTATO_FIELD_TAMANHOCAMPO_LABEL" description="MOD_WGAJAXCONTATO_FIELD_TAMANHOCAMPO_DESC">
+                  <option value="input-xlarge">MOD_WGAJAXCONTATO_SITE_PADRAO_VAL</option>
+                  <option value="input-fluido">MOD_WGAJAXCONTATO_SITE_FLUIDO_VAL</option>
+                </field>
+                <field name="largura" type="text" default="auto" label="MOD_WGAJAXCONTATO_FIELD_LARGURA_LABEL" description="MOD_WGAJAXCONTATO_FIELD_LARGURA_DESC"/>
+                <field name="altura" type="text" default="300" label="MOD_WGAJAXCONTATO_FIELD_ALTURA_LABEL" description="MOD_WGAJAXCONTATO_FIELD_ALTURA_DESC"/>
             </fieldset>
             <fieldset name="advanced" label="Avançado">
                 <field name="moduleclass_sfx" type="text" default="" label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL" description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC"/>
