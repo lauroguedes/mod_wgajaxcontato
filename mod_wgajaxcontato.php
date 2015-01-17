@@ -19,9 +19,11 @@
 
 	$doc = JFactory::getDocument();
 
-	// recebendo os valores
+	// recebendo os parâmetros
 	$destinatario = $params->get('email');
 	$mensagem = $params->get('mensagem');
+	$posicaolabel = $params->get('posicaolabel');
+	$tamanhocampo = $params->get('tamanhocampo');
 
 	// tratando o valor da altura e da largura
 	$largura = modWgAjaxContatoHelper::trataAlturaLargura($params->get('largura'));

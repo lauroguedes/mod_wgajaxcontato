@@ -26,39 +26,39 @@
 		<button type="button" class="close" data-dismiss="alert">&times;</button>
 		<strong><i class="icon-ban-circle"></i></strong> <span></span>
 	</div>
-	<form class="form-horizontal" id="enviaEmail" method="post" action="<?php echo $urlArquivoAjax; ?>">
+	<form class="form-<?php echo $posicaolabel; ?>" id="enviaEmail" method="post" action="<?php echo $urlArquivoAjax; ?>">
 		<fieldset>
 			<!-- Text input-->
 			<div class="control-group">
-				<label class="control-label" for="nome"><?php echo JText::_('LABEL_WG_SITE_NOME');?></label>
+				<label class="control-label" for="nome"><?php echo JText::_('MOD_WGAJAXCONTATO_SITE_NOME_LABEL');?></label>
 				<div class="controls">
-					<input id="nome" name="nome" class="input-xlarge" required="" type="text">
+					<input id="nome" name="nome" class="<?php echo $tamanhocampo; ?>" required="" type="text">
 				</div>
 			</div>
 
 			<!-- Text input-->
 			<div class="control-group">
-				<label class="control-label" for="email"><?php echo JText::_('LABEL_WG_SITE_EMAIL');?></label>
+				<label class="control-label" for="email"><?php echo JText::_('MOD_WGAJAXCONTATO_SITE_EMAIL_LABEL');?></label>
 				<div class="controls">
-					<input id="email" name="email" class="input-xlarge" required="" type="text">
+					<input id="email" name="email" class="<?php echo $tamanhocampo; ?>" required="" type="text">
 
 				</div>
 			</div>
 
 			<!-- Text input-->
 			<div class="control-group">
-				<label class="control-label" for="assunto"><?php echo JText::_('LABEL_WG_SITE_ASSUNTO');?></label>
+				<label class="control-label" for="assunto"><?php echo JText::_('MOD_WGAJAXCONTATO_SITE_ASSUNTO_LABEL');?></label>
 				<div class="controls">
-					<input id="assunto" name="assunto" class="input-xlarge" required="" type="text">
+					<input id="assunto" name="assunto" class="<?php echo $tamanhocampo; ?>" required="" type="text">
 
 				</div>
 			</div>
 
 			<!-- Textarea -->
 			<div class="control-group">
-				<label class="control-label" for="msn"><?php echo JText::_('LABEL_WG_SITE_MENSAGEM');?></label>
+				<label class="control-label" for="msn"><?php echo JText::_('MOD_WGAJAXCONTATO_SITE_MENSAGEM_LABEL');?></label>
 				<div class="controls">                     
-					<textarea id="msn" required="" name="msn"></textarea>
+					<textarea id="msn" required="" name="msn" class="<?php echo $tamanhocampo; ?>"></textarea>
 				</div>
 			</div>
 
@@ -66,14 +66,14 @@
 			<div class="control-group">
 				<label class="control-label" for="enviar"></label>
 				<div class="controls">
-					<button id="enviar" name="enviar" class="btn btn-primary"><?php echo JText::_('LABEL_WG_SITE_BTN');?></button>
+					<button id="enviar" name="enviar" class="btn btn-primary"><?php echo JText::_('MOD_WGAJAXCONTATO_SITE_ENVIAR_LABEL');?></button>
 				</div>
 			</div>
 
 			<input id="destinatario" name="destinatario" value="<?php echo $destinatario; ?>" class="input-xlarge" type="hidden">
 			<input id="mensagem_retorno" name="mensagem_retorno" value="<?php echo $mensagem; ?>"  class="input-xlarge" type="hidden">
-			<input id="mensagem_erro1" name="mensagem_erro1" value="<?php echo JText::_('VAL_WG_ADMIN_MSNERROUM');?>"  class="input-xlarge" type="hidden">
-			<input id="mensagem_erro2" name="mensagem_erro2" value="<?php echo JText::_('VAL_WG_ADMIN_MSNERRODOIS');?>"  class="input-xlarge" type="hidden">
+			<input id="mensagem_erro1" name="mensagem_erro1" value="<?php echo JText::_('MOD_WGAJAXCONTATO_SITE_ERROA_MSN');?>"  class="input-xlarge" type="hidden">
+			<input id="mensagem_erro2" name="mensagem_erro2" value="<?php echo JText::_('MOD_WGAJAXCONTATO_SITE_ERROB_MSN');?>"  class="input-xlarge" type="hidden">
 
 		</fieldset>
 	</form>
