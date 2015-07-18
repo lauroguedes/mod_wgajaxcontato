@@ -22,7 +22,7 @@
 	-o-background: rgba(255,255,255,0.5);
 	-ms-background: rgba(255,255,255,0.5);
 }
-.alert-success,.alert-error{
+#resposta{
 	text-align: center;
 	z-index: 2;
 	opacity: 0.8;
