@@ -53,6 +53,7 @@ class modWgAjaxContatoHelper{
         $falha = $params->get('falha');
         $openvio = $params->get('openvio');
         $destinatario = $params->get('email'); 
+        $cc = $params->get('emailcc');
         $smtpautenticacao = $params->get('smtpautenticacao');
         $smtpseguranca = $params->get('smtpseguranca');
         $smtpporta = $params->get('smtpporta');
@@ -92,6 +93,30 @@ class modWgAjaxContatoHelper{
                 if ( $input['name'] == 'g-recaptcha-response'){
                     $resp = $input['value'];
                 }
+            }
+        }
+
+        // validando o formulário
+        if ($nome == null || $email == null || $assunto == null || $msn == null){
+            return '<div class="alert alert-error">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong><i class="icon-ban-circle"></i></strong> <span>'.JText::_('MOD_WGAJAXCONTATO_SITE_FORM_ERRO1').'</span>
+        </div>';
+        }
+         //validando o e-mail
+        if (!ereg('^([a-zA-Z0-9.-])*([@])([a-z0-9]).([a-z]{2,3})',$email)){
+            return '<div class="alert alert-error">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong><i class="icon-ban-circle"></i></strong> <span>'.JText::_('MOD_WGAJAXCONTATO_SITE_FORM_ERRO2').'</span>
+        </div>';
+        }else{
+            //Valida o dominio
+            $dominio=explode('@',$email);
+            if(!checkdnsrr($dominio[1],'A')){
+                return '<div class="alert alert-error">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong><i class="icon-ban-circle"></i></strong> <span>'.JText::_('MOD_WGAJAXCONTATO_SITE_FORM_ERRO3').'</span>
+        </div>';
             }
         }
 
@@ -151,6 +176,12 @@ class modWgAjaxContatoHelper{
         $enviar = array($email, $nome);
         $mail->setSender($enviar);
         $mail->addRecipient($destinatario);
+        if ($cc != null && strpos($cc,',') !== false){
+            $cc = explode(',', $cc);
+            $mail->addCC($cc);
+        }elseif ($cc != null && strpos($cc, ',') === false){
+            $mail->addCC($cc);
+        }
         $mail->setSubject($assunto);
         $mail->isHTML(true);
         $mail->Encoding = 'base64'; 

@@ -33,7 +33,7 @@
 			<div class="control-group">
 				<label class="control-label" for="email"><?php echo JText::_('MOD_WGAJAXCONTATO_SITE_EMAIL_LABEL');?></label>
 				<div class="controls">
-					<input id="email" name="email" class="<?php echo $tamanhocampo; ?>" required="" type="text">
+					<input id="email" name="email" class="<?php echo $tamanhocampo; ?>" required="" type="email">
 
 				</div>
 			</div>

@@ -56,6 +56,7 @@
                     size="30"
                     class="inputbox"
                     validate="email" />
+                <field name="emailcc" type="textarea" label="MOD_WGAJAXCONTATO_FIELD_EMAILCC_LABEL" description="MOD_WGAJAXCONTATO_FIELD_EMAILCC_DESC" rows="10" cols="5" />
                 <field name="sucesso" type="textarea" label="MOD_WGAJAXCONTATO_FIELD_SUCESSO_LABEL" description="MOD_WGAJAXCONTATO_FIELD_SUCESSO_DESC" rows="7" cols="5" default="Mensagem enviada com sucesso!" />
                 <field name="falha" type="textarea" label="MOD_WGAJAXCONTATO_FIELD_FALHA_LABEL" description="MOD_WGAJAXCONTATO_FIELD_FALHA_DESC" rows="7" cols="5" default="Falha ao enviar o e-mail! Confira sua conexão." />
                 <field name="posicaolabel" type="list" default="MOD_WGAJAXCONTATO_SITE_AOLADO_VAL" label="MOD_WGAJAXCONTATO_FIELD_POSICAOLABEL_LABEL" description="MOD_WGAJAXCONTATO_FIELD_POSICAOLABEL_DESC">
