@@ -23,10 +23,19 @@
 	$largura = modWgAjaxContatoHelper::trataAlturaLargura($params->get('largura'));
 	$altura = modWgAjaxContatoHelper::trataAlturaLargura($params->get('altura'));
 
-	// informações do captcha
-	$formcaptcha		= $params->get('formcaptcha', 1);
-	$captcha_question	= $params->get('captcha_question');
-	$captcha_answer		= $params->get('captcha_answer');
+	$usecaptcha = $params->get('captcha');
+	if ($usecaptcha){
+		// implementação reCaptcha
+		JPluginHelper::importPlugin('captcha');
+		if (JPluginHelper::isEnabled('captcha')){
+			$dispatcher = JDispatcher::getInstance();
+			$dispatcher->trigger('onInit');
+			$captcha = $dispatcher->trigger('onDisplay');
+			$publicado = true;
+		}else{
+			$publicado = false;
+		}
+	}
 
 	// pega o valor da classe do módulo
 	$moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
@@ -36,6 +45,6 @@
 
 	// declarando dependências
 	$doc = JFactory::getDocument();
-	$doc->addStyleSheet(JURI::root().'modules/mod_wgajaxcontato/assets/css/ajax.css');
-	$doc->addScript(JURI::root().'modules/mod_wgajaxcontato/assets/js/ajax.js');
+	$doc->addStyleSheet(JURI::base().'modules/mod_wgajaxcontato/assets/css/ajax.css');
+	$doc->addScript(JURI::base().'modules/mod_wgajaxcontato/assets/js/ajax.js');
 ?>

@@ -55,13 +55,15 @@
 			</div>
 
 			<!-- CAPTCHA -->
-			<?php if($formcaptcha) { ?>
+			<?php if($usecaptcha && $publicado) { ?>
 			<div class="control-group">
-				<label class="control-label" for="captcha"><?php echo $captcha_question; ?></label>
+				<label class="control-label" for="recaptcha">Captcha</label>
 				<div class="controls">
-					<input id="sccaptcha" name="sccaptcha" class="<?php echo $tamanhocampo; ?>" required="" type="text">
+					<?php echo $captcha[0]; ?>
 				</div>
 			</div>
+			<?php }elseif ($usecaptcha && !$publicado){ ?>
+			<p class="alert alert-error"><?php echo JText::_('MOD_WGAJAXCONTATO_SITE_CAPTCHA_DESABILITADO_MSN'); ?></p>
 			<?php } ?>
 
 			<!-- Button -->

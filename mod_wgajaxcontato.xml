@@ -12,6 +12,12 @@
     <description><![CDATA[
                 <p>Módulo de envio de e-mail de forma assíncrona utilizando Ajax.</p>
                 <p>Versão <strong>2.0</strong></p>
+                <p><strong>Implementações</strong></p>
+                <ul>
+                    <li>Envio por SMTP</li>
+                    <li>Utilização do reCaptcha 2.0</li>
+                    <li>Template do E-mail</li>
+                </ul>
                 <p>Desenvolvido por Lauro W. Guedes</p>
                 <p>leo-ti@hotmail.com / leowgweb@gmail.com <br/><a href="http://leowgweb.com.br">www.leowgweb.com.br</a><br/></p>
         ]]></description>
@@ -62,13 +68,16 @@
                 </field>
                 <field name="largura" type="text" default="auto" label="MOD_WGAJAXCONTATO_FIELD_LARGURA_LABEL" description="MOD_WGAJAXCONTATO_FIELD_LARGURA_DESC"/>
                 <field name="altura" type="text" default="300" label="MOD_WGAJAXCONTATO_FIELD_ALTURA_LABEL" description="MOD_WGAJAXCONTATO_FIELD_ALTURA_DESC"/>
-                <field name="formcaptcha" type="radio" class="btn-group" default="1" label="CAPTCHA" description="CAPTCHA_DESC">
+                <field name="nota" type="note" class="alert alert-info" label="MOD_WGAJAXCONTATO_FIELD_NOTA_LABEL" description="MOD_WGAJAXCONTATO_FIELD_NOTA_DESC" />
+                <field name="captcha" class="radio btn-group btn-group-yesno" type="radio"
+                    label="MOD_WGAJAXCONTATO_FIELD_CAPTCHA_LABEL"
+                    description="MOD_WGAJAXCONTATO_FIELD_CAPTCHA_DESC"
+                    default="1" >
                     <option value="1">JYES</option>
                     <option value="0">JNO</option>
                 </field>
-                <field name="captcha_question" type="text" default="3 + 4 = ?" label="CAPTCHA_QUESTION" />
-                <field name="captcha_answer" type="text" default="7" label="CAPTCHA_ANSWER" />
-                <field name="failed_captcha" type="text" default="Você entrou com a resposta incorreta. Por favor tente novamente" label="WRONG_CAPTCHA" />
+                <field name="nota2" type="note" class="alert alert-info" label="MOD_WGAJAXCONTATO_FIELD_NOTA2_LABEL" description="MOD_WGAJAXCONTATO_FIELD_NOTA2_DESC" />
+                <field name="template" label="MOD_WGAJAXCONTATO_FIELD_TEMPLATE_LABEL" type="editor" width="250" rows="12" filter="safehtml" />
             </fieldset>
 
             <!-- aba das configurações do SMTP -->
@@ -77,7 +86,7 @@
                   <option value="true">JYES</option>
                   <option value="false">JNO</option>
                 </field>
-                <field name="smtpseguranca" type="list" default="false" label="MOD_WGAJAXCONTATO_FIELD_SMTPSEGURANCA_LABEL" description="MOD_WGAJAXCONTATO_FIELD_SMTPSEGURANCA_DESC">
+                <field name="smtpseguranca" type="list" default="MOD_WGAJAXCONTATO_FIELD_SMTPNONE_VAL" label="MOD_WGAJAXCONTATO_FIELD_SMTPSEGURANCA_LABEL" description="MOD_WGAJAXCONTATO_FIELD_SMTPSEGURANCA_DESC">
                   <option value="false">MOD_WGAJAXCONTATO_FIELD_SMTPNONE_VAL</option>
                   <option value="ssl">MOD_WGAJAXCONTATO_FIELD_SMTPSSL_VAL</option>
                   <option value="tls">MOD_WGAJAXCONTATO_FIELD_SMTPTLS_VAL</option>

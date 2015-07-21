@@ -61,10 +61,8 @@ class modWgAjaxContatoHelper{
         $smtphost = $params->get('smtphost');
         
         // informações do captcha
-        $failed_captcha     = $params->get('failed_captcha');
-        $formcaptcha        = $params->get('formcaptcha', 1);
-        $captcha_question   = $params->get('captcha_question');
-        $captcha_answer     = $params->get('captcha_answer');
+        $usecaptcha = $params->get('captcha');
+        $publicado = JPluginHelper::isEnabled('captcha');
 
         // pega os campos digitados pelo usuário no formulário de contato
         $inputs = $input->get('data', array(), 'ARRAY');
@@ -90,22 +88,61 @@ class modWgAjaxContatoHelper{
             {
                 $msn = nl2br( $input['value'] );
             }
-
-            if($formcaptcha) {
-                if( $input['name'] == 'sccaptcha' )
-                {
-                    $sccaptcha = $input['value'];
+            if($usecaptcha && $publicado) {
+                if ( $input['name'] == 'g-recaptcha-response'){
+                    $resp = $input['value'];
                 }
             }
         }
 
-        if($formcaptcha) {
-            if ($sccaptcha != $captcha_answer) {
+        // estruturação da mensagem
+        $template = $params->get('template');
+        if ($template === null){
+            $body = '<h4>Contato enviado do site</h4>';
+            $body .= '<strong>Nome: </strong>'.$nome;
+            $body .= '<br><strong>E-mail: </strong>'.$email;
+            $body .= '<br><strong>Assunto: </strong>'.$assunto;
+            $body .= '<br><strong>Mensagem: </strong>'.$msn;
+        }else{
+            $masc = array('{{nome}}','{{email}}','{{assunto}}','{{mensagem}}');
+            $sub = array($nome,$email,$assunto,$msn);
+            $body = str_replace($masc, $sub, $template);
+        }
+
+        if ($usecaptcha && $publicado){
+            // implementação reCaptcha
+            JPluginHelper::importPlugin('captcha');
+            $dispatcher = JDispatcher::getInstance();
+            $plugin = JPluginHelper::getPlugin('captcha');
+            $p = json_decode($plugin[0]->params);
+            $key = $p->private_key;
+            $entrada = JFactory::getApplication()->input;
+            $ip = $entrada->server->get('REMOTE_ADDR', '', 'string');
+            
+            // verificação nos servidores da Google
+            $verificacao = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$key."&response=".$resp."&remoteip=".$ip);
+            $verificacao = json_decode($verificacao);
+
+            // verificação da marcação
+            if(!$resp){
                 return '<div class="alert alert-error">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong><i class="icon-ban-circle"></i></strong> <span>'.$failed_captcha.'</span>
-    </div>';
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong><i class="icon-ban-circle"></i></strong> <span>'.JText::_('MOD_WGAJAXCONTATO_SITE_CAPTCHA_ERRO1').'</span>
+        </div>';
             }
+
+            // verificação do spam
+            if($verificacao->success == false){
+                return '<div class="alert alert-error">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong><i class="icon-ban-circle"></i></strong> <span>'.JText::_('MOD_WGAJAXCONTATO_SITE_CAPTCHA_ERRO2').'</span>
+        </div>';
+            }
+        }elseif ($usecaptcha && !$pluginCaptcha){
+            return '<div class="alert alert-error">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong><i class="icon-ban-circle"></i></strong> <span>'.JText::_('MOD_WGAJAXCONTATO_SITE_CAPTCHA_ERRO3').'</span>
+        </div>';
         }
 
         // instancia a classe PHPMailer
@@ -117,7 +154,7 @@ class modWgAjaxContatoHelper{
         $mail->setSubject($assunto);
         $mail->isHTML(true);
         $mail->Encoding = 'base64'; 
-        $mail->setBody($msn);
+        $mail->setBody($body);
 
         if ($openvio == 0 || !$mail->useSMTP($smtpautenticacao, $smtphost, $smtpusuario, $smtpsenha, $smtpseguranca, $smtpporta)){
             if ($mail->Send()) {
