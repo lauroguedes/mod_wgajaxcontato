@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="module" version="3.1.0" client="site" method="upgrade">
     <name>WG Ajax Contato</name>
-    <creationDate>Jan 2015</creationDate>
-    <author>www.leowgweb.com.br</author>
+    <creationDate>Jul 2015</creationDate>
+    <author>Lauro W. Guedes</author>
     <copyright>Copyright (C) 2015 Lauro W. Guedes.</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-    <authorEmail>leo-ti@leowgweb.com.br</authorEmail>
+    <authorEmail>leo-ti@hotmail.com</authorEmail>
     <authorUrl>http://www.leowgweb.com.br</authorUrl>
     <author>Lauro W. Guedes</author>
-    <version>1.2</version>
+    <version>2.0</version>
     <description><![CDATA[
                 <p>Módulo de envio de e-mail de forma assíncrona utilizando Ajax.</p>
+                <p>Versão <strong>2.0</strong></p>
+                <p><strong>Implementações</strong></p>
+                <ul>
+                    <li>Envio por SMTP</li>
+                    <li>Utilização do reCaptcha 2.0</li>
+                    <li>Template do E-mail</li>
+                </ul>
                 <p>Desenvolvido por Lauro W. Guedes</p>
                 <p>leo-ti@hotmail.com / leowgweb@gmail.com <br/><a href="http://leowgweb.com.br">www.leowgweb.com.br</a><br/></p>
         ]]></description>
@@ -21,8 +28,6 @@
         <filename>helper.php</filename>
         <filename>tmpl/default.php</filename>
         <filename>tmpl/index.html</filename>
-        <filename>lib/enviar.php</filename>
-        <filename>lib/index.html</filename>
         <filename>assets/index.html</filename>
         <filename>assets/js/index.html</filename>
         <filename>assets/js/ajax.js</filename>
@@ -39,6 +44,11 @@
     <config>
         <fields name="params">
             <fieldset name="configuracao" label="MOD_WGAJAXCONTATO_ABA_CONFIGURACAO">
+                <!-- opção de ecolher o envio PHP MAIL ou SMTP -->
+                <field name="openvio" type="radio" default="0" class="radio btn-group btn-group-yesno" label="MOD_WGAJAXCONTATO_FIELD_OPENVIO_LABEL" description="MOD_WGAJAXCONTATO_FIELD_OPENVIO_DESC">
+                      <option value="0">MOD_WGAJAXCONTATO_FIELD_PHPMAIL_VAL</option>
+                      <option value="1">MOD_WGAJAXCONTATO_FIELD_SMTP_VAL</option>
+                </field>
                 <field name="email" type="email"
                     label="MOD_WGAJAXCONTATO_FIELD_EMAIL_LABEL"
                     description="MOD_WGAJAXCONTATO_FIELD_EMAIL_DESC"
@@ -46,7 +56,9 @@
                     size="30"
                     class="inputbox"
                     validate="email" />
-                <field name="mensagem" type="textarea" label="MOD_WGAJAXCONTATO_FIELD_MENSAGEM_LABEL" description="MOD_WGAJAXCONTATO_FIELD_MENSAGEM_DESC" rows="7" cols="5" />
+                <field name="emailcc" type="textarea" label="MOD_WGAJAXCONTATO_FIELD_EMAILCC_LABEL" description="MOD_WGAJAXCONTATO_FIELD_EMAILCC_DESC" rows="10" cols="5" />
+                <field name="sucesso" type="textarea" label="MOD_WGAJAXCONTATO_FIELD_SUCESSO_LABEL" description="MOD_WGAJAXCONTATO_FIELD_SUCESSO_DESC" rows="7" cols="5" default="Mensagem enviada com sucesso!" />
+                <field name="falha" type="textarea" label="MOD_WGAJAXCONTATO_FIELD_FALHA_LABEL" description="MOD_WGAJAXCONTATO_FIELD_FALHA_DESC" rows="7" cols="5" default="Falha ao enviar o e-mail! Confira sua conexão." />
                 <field name="posicaolabel" type="list" default="MOD_WGAJAXCONTATO_SITE_AOLADO_VAL" label="MOD_WGAJAXCONTATO_FIELD_POSICAOLABEL_LABEL" description="MOD_WGAJAXCONTATO_FIELD_POSICAOLABEL_DESC">
                   <option value="horizontal">MOD_WGAJAXCONTATO_SITE_AOLADO_VAL</option>
                   <option value="vertical">MOD_WGAJAXCONTATO_SITE_ACIMA_VAL</option>
@@ -57,6 +69,33 @@
                 </field>
                 <field name="largura" type="text" default="auto" label="MOD_WGAJAXCONTATO_FIELD_LARGURA_LABEL" description="MOD_WGAJAXCONTATO_FIELD_LARGURA_DESC"/>
                 <field name="altura" type="text" default="300" label="MOD_WGAJAXCONTATO_FIELD_ALTURA_LABEL" description="MOD_WGAJAXCONTATO_FIELD_ALTURA_DESC"/>
+                <field name="nota" type="note" class="alert alert-info" label="MOD_WGAJAXCONTATO_FIELD_NOTA_LABEL" description="MOD_WGAJAXCONTATO_FIELD_NOTA_DESC" />
+                <field name="captcha" class="radio btn-group btn-group-yesno" type="radio"
+                    label="MOD_WGAJAXCONTATO_FIELD_CAPTCHA_LABEL"
+                    description="MOD_WGAJAXCONTATO_FIELD_CAPTCHA_DESC"
+                    default="1" >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field name="nota2" type="note" class="alert alert-info" label="MOD_WGAJAXCONTATO_FIELD_NOTA2_LABEL" description="MOD_WGAJAXCONTATO_FIELD_NOTA2_DESC" />
+                <field name="template" label="MOD_WGAJAXCONTATO_FIELD_TEMPLATE_LABEL" type="editor" width="250" rows="12" filter="safehtml" />
+            </fieldset>
+
+            <!-- aba das configurações do SMTP -->
+            <fieldset name="confsmtp" label="SMTP">
+                <field name="smtpautenticacao" type="radio" class="radio btn-group btn-group-yesno" default="true" label="MOD_WGAJAXCONTATO_FIELD_SMTPAUTENTICACAO_LABEL" description="">
+                  <option value="true">JYES</option>
+                  <option value="false">JNO</option>
+                </field>
+                <field name="smtpseguranca" type="list" default="MOD_WGAJAXCONTATO_FIELD_SMTPNONE_VAL" label="MOD_WGAJAXCONTATO_FIELD_SMTPSEGURANCA_LABEL" description="MOD_WGAJAXCONTATO_FIELD_SMTPSEGURANCA_DESC">
+                  <option value="false">MOD_WGAJAXCONTATO_FIELD_SMTPNONE_VAL</option>
+                  <option value="ssl">MOD_WGAJAXCONTATO_FIELD_SMTPSSL_VAL</option>
+                  <option value="tls">MOD_WGAJAXCONTATO_FIELD_SMTPTLS_VAL</option>
+                </field>
+                <field name="smtpporta" type="text" default="25" label="MOD_WGAJAXCONTATO_FIELD_SMTPPORTA_LABEL" description="MOD_WGAJAXCONTATO_FIELD_SMTPPORTA_DESC" size="10" />
+                <field name="smtpusuario" type="text" default="" label="MOD_WGAJAXCONTATO_FIELD_SMTPUSUARIO_LABEL" description="MOD_WGAJAXCONTATO_FIELD_SMTPUSUARIO_DESC" size="60" />
+                <field name="smtpsenha" type="password" default="" label="MOD_WGAJAXCONTATO_FIELD_SMTPSENHA_LABEL" description="MOD_WGAJAXCONTATO_FIELD_SMTPSENHA_DESC" />
+                <field name="smtphost" type="text" default="" label="MOD_WGAJAXCONTATO_FIELD_SMTPHOST_LABEL" description="MOD_WGAJAXCONTATO_FIELD_SMTPHOST_DESC" size="60" />
             </fieldset>
             <fieldset name="advanced" label="Avançado">
                 <field name="moduleclass_sfx" type="text" default="" label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL" description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC"/>
