@@ -27,6 +27,10 @@
 	if ($usecaptcha){
 		// implementação reCaptcha
 		JPluginHelper::importPlugin('captcha');
+		// pegando versão
+		$plugin = JPluginHelper::getPlugin('captcha');
+        $p = json_decode($plugin[0]->params);
+        $versao = $p->version;
 		if (JPluginHelper::isEnabled('captcha')){
 			$dispatcher = JDispatcher::getInstance();
 			$dispatcher->trigger('onInit');

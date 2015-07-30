@@ -141,27 +141,36 @@ class modWgAjaxContatoHelper{
             $plugin = JPluginHelper::getPlugin('captcha');
             $p = json_decode($plugin[0]->params);
             $key = $p->private_key;
+            $versao = $p->version;
             $entrada = JFactory::getApplication()->input;
             $ip = $entrada->server->get('REMOTE_ADDR', '', 'string');
             
-            // verificação nos servidores da Google
-            $verificacao = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$key."&response=".$resp."&remoteip=".$ip);
-            $verificacao = json_decode($verificacao);
+            // verificação da versão
+            if ($versao == '2.0'){
+                // verificação nos servidores da Google
+                $verificacao = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$key."&response=".$resp."&remoteip=".$ip);
+                $verificacao = json_decode($verificacao);
 
-            // verificação da marcação
-            if(!$resp){
-                return '<div class="alert alert-error">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <strong><i class="icon-ban-circle"></i></strong> <span>'.JText::_('MOD_WGAJAXCONTATO_SITE_CAPTCHA_ERRO1').'</span>
-        </div>';
-            }
+                 // verificação da marcação
+                if(!$resp){
+                    return '<div class="alert alert-error">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong><i class="icon-ban-circle"></i></strong> <span>'.JText::_('MOD_WGAJAXCONTATO_SITE_CAPTCHA_ERRO1').'</span>
+            </div>';
+                }
 
-            // verificação do spam
-            if($verificacao->success == false){
+                // verificação do spam
+                if($verificacao->success == false){
+                    return '<div class="alert alert-error">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong><i class="icon-ban-circle"></i></strong> <span>'.JText::_('MOD_WGAJAXCONTATO_SITE_CAPTCHA_ERRO2').'</span>
+            </div>';
+                }
+            }else{
                 return '<div class="alert alert-error">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <strong><i class="icon-ban-circle"></i></strong> <span>'.JText::_('MOD_WGAJAXCONTATO_SITE_CAPTCHA_ERRO2').'</span>
-        </div>';
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong><i class="icon-ban-circle"></i></strong> <span>'.JText::_('MOD_WGAJAXCONTATO_SITE_CAPTCHA_ERRO4').'</span>
+            </div>';
             }
         }elseif ($usecaptcha && !$pluginCaptcha){
             return '<div class="alert alert-error">

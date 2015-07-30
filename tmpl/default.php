@@ -55,7 +55,7 @@
 			</div>
 
 			<!-- CAPTCHA -->
-			<?php if($usecaptcha && $publicado) { ?>
+			<?php if($usecaptcha && $publicado && $versao == '2.0') { ?>
 			<div class="control-group">
 				<label class="control-label" for="recaptcha">Captcha</label>
 				<div class="controls">
